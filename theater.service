@@ -1,0 +1,15 @@
+[Unit]
+Description=Control the Theater
+After=multi-user.target
+
+[Service]
+User=pi
+Group=pi
+ExecStart=/usr/bin/python /home/pi/theater.py
+Restart=always
+RestartSec=10s
+KillMode=process
+TimeoutSec=infinity
+
+[Install]
+WantedBy=graphical.target
