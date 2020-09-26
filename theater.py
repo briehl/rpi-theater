@@ -11,7 +11,8 @@ VLC_CMD_BASE = [
     "--no-audio",
     "--fullscreen",
     "--no-video-title-show",
-    "--play-and-exit"
+    "--play-and-exit",
+    "--quiet"
 ]
 MOTOR_PINS = [11, 13, 15, 16]
 MOTOR_STEPS = 4000
@@ -31,10 +32,11 @@ def play_all_movies(stdscr):
         for f in filenames:
             video = os.path.join(VIDEO_DIR, f)
             cmd = VLC_CMD_BASE + [video]
-            resp = subprocess.check_call(cmd)
+            resp = subprocess.check_call(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             cycle_curtain(motor, stdscr)
     except KeyboardInterrupt:
-        GPIO.cleanup()
+        pass
+    GPIO.cleanup()
 
 def gpio_init():
     GPIO.setmode(GPIO.BOARD)

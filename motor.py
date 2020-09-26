@@ -70,6 +70,7 @@ class StepperMotor:
             self._do_step(cur_step)
             cur_step = self._get_next_step(cur_step, direction)
             time.sleep(speed)
+        self._do_step(-1)
 
 if __name__ == "__main__":
     pins = [11, 13, 15, 16]
