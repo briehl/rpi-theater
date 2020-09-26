@@ -40,6 +40,12 @@ Once installed and configured with `raspi-config` I set it up with the following
 
 Now that part's set - the Raspberry Pi will run the `theater.py` script on startup, which will call VLC on every movie in the `video` directory, and leave a break in between, forever.
 
+## Notes on systemd
+Debugging:
+
+* run `journalctl -u theater.service` to show logs about the service
+* run `systemctl status theater.service` to get high level status info
+
 ## Next Steps
 
 1.  Add a switch or button to not load the script in some mode. A debug toggle.
@@ -61,3 +67,11 @@ Our options are.
     1. Freely use all the Pi pins.
     2. One 5V -> motor, other (maybe) can power some lights? So now the lights go out, and the curtains are drawn, then the show begins. And the lights go back on at the end. Neat.
     3. Just the motor.
+
+## Update 9/24/2020
+Going with 2.2. right now. Got a setup with a separate power for the screen and got the stepper motor running with some GPIO pins. That's driven by motor.py - the StepperMotor class provides a function to drive a motor a certain number of steps in some direction with some delay between each step. Easy-peasy lemon squeezy.
+
+Next = 2 parts.
+1. Find an analog GPIO pin (I think? Maybe they're called something else? Or maybe they're all analog?) and wire the lights. I want them to fade in and out. Probably run a bunch of lights in serial. Also pretty easy-peasy.
+2. Find a design or system for drawing and undrawing the curtain. I'm guessing with some clever pulley system, and maybe multiple strings on the same motor, I can make that work. But, well, TO THE INTERNET!
+    1. Holy fucking perfect idea. Just minify this to baby curtain size, and we're good. https://myoddrawings.wordpress.com/2009/02/25/how-to-make-a-pvc-stage-curtain-and-pulley-display/

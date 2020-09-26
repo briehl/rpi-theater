@@ -40,8 +40,6 @@ class StepperMotor:
     """
     def __init__(self, pin1: int, pin2: int, pin3: int, pin4: int):
         self.pins = [pin1, pin2, pin3, pin4]
-        GPIO.setmode(GPIO.BOARD)
-        GPIO.setup(self.pins, GPIO.OUT)
 
     def _get_next_step(self, step: int, d: bool) -> int:
         step += 1 if d == CLOCKWISE else -1
@@ -73,10 +71,10 @@ class StepperMotor:
             cur_step = self._get_next_step(cur_step, direction)
             time.sleep(speed)
 
-    def shutdown(self):
-        GPIO.cleanup()
-
 if __name__ == "__main__":
-    motor = StepperMotor(11, 13, 15, 16)
+    pins = [11, 13, 15, 16]
+    GPIO.setmode(GPIO.BOARD)
+    GPIO.setup(pins, GPIO.OUT)
+    motor = StepperMotor(*pins)
     motor.run(4000, CLOCKWISE, 0.001)
-    motor.shutdown()
+    GPIO.cleanup()
